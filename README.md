@@ -1,0 +1,2 @@
+# covid-data-infer
+A SURVEY TO INFER ON COVID 19 EFFECTS
