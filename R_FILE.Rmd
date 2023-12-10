@@ -1,0 +1,107 @@
+---
+title: "Statistics First Semester Project"
+author: "M.Tech. CRS $1^{st}$ Year"
+date: "December 25, 2023"
+output:
+html_document:
+df_print: paged
+---
+
+# Introduction
+
+The first semester Statistics project guided under [Prof. Anup Dewanji](https://www.isical.ac.in/~dewanjia/).
+
+Let's load the responses!
+
+```{r}
+data <- read.csv("FORM.csv")
+```
+
+```{r, layout="l-body-outset"}
+library(rmarkdown)
+paged_table(data)
+```
+
+## Age Groups Participated
+
+```{r}
+library(ggplot2)
+
+# Count the frequency of each AGE group
+age_counts <- table(data$AGE)
+
+# Convert names to character (no need to convert to numeric for labels)
+A <- names(age_counts)
+
+# Convert counts to numeric
+B <- as.numeric(as.character(age_counts))
+```
+
+### Barplot
+
+```{r}
+# Plot the bar chart
+bar_positions <- barplot(B, names.arg = A, xlab = "AGE GROUP",
+        ylab = "COUNT", col = "steelblue",
+        main = "Participants of the Survey",
+        cex.main = 1.5, cex.lab = 1.2, cex.axis = 1.1,
+        ylim = c(0, max(B) * 1.2))
+
+# Add data labels on top of each bar
+text(
+  x = bar_positions,
+  y = B + 1,
+  labels = B,
+  pos = 3,
+  cex = 1.2,
+  col = "black"
+)
+```
+
+## Classification by genders
+
+```{r}
+# Count the frequency of each AGE group
+gen_counts <- table(data$GENDER)
+
+# Convert names to character (no need to convert to numeric for labels)
+A <- names(gen_counts)
+
+# Convert counts to numeric
+B <- as.numeric(as.character(gen_counts))
+```
+
+### Bar Plot
+```{r}
+# Plot the bar chart
+bar_positions <- barplot(B, names.arg = A, xlab = "Genders Participated",
+        ylab = "COUNT", col = "steelblue",
+        main = "Participants of the Survey",
+        cex.main = 1.5, cex.lab = 1.2, cex.axis = 1.1,
+        ylim = c(0, max(B) * 1.2))
+
+# Add data labels on top of each bar
+text(
+  x = bar_positions,
+  y = B + 1,
+  labels = B,
+  pos = 3,
+  cex = 1.2,
+  col = "black"
+)
+```
+
+### Pieplot
+```{r}
+# Get the library.
+library(plotrix)
+
+# 3D Exploded Pie Chart
+slices <- B
+lbls <- A
+piepercent <- round(100 * slices / sum(slices), 1)
+
+# Plot the chart.
+pie3D(slices,explode=0.1, main="Pie Chart of age groups", col = rainbow(length(slices)))
+legend("topright", A, cex = 0.5, fill = rainbow(length(slices)))
+```
